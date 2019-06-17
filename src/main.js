@@ -7,6 +7,8 @@ import api from '@/api'
 import {
   router
 } from './router'
+// 引入主题文件
+import '@/asset/theme/default.less'
 
 Vue.use(Vant)
 /**

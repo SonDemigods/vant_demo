@@ -30,6 +30,7 @@ routes.forEach(route => {
 
 const router = new Router({
   routes,
+  base: '/',
   mode: 'history'
 });
 
