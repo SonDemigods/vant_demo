@@ -252,3 +252,197 @@ export const str2date = str => {
   }
   return date
 }
+
+/**
+ * @functionName isStatic
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 检测数据是不是除了symbol外的原始数据
+ * @author 张航
+ * @date 2019-07-10 09:21:32
+ * @version V1.0.0
+ */
+export const isStatic = (value) => {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean' ||
+    typeof value === 'undefined' ||
+    value === null
+  )
+}
+
+/**
+ * @functionName isPrimitive
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 检测数据是不是原始数据
+ * @author 张航
+ * @date 2019-07-10 13:42:00
+ * @version V1.0.0
+ */
+export const isPrimitive = (value) => {
+  return isStatic(value) || typeof value === 'symbol'
+}
+
+/**
+ * @functionName isObject
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 判断数据是不是引用类型的数据
+ * @author 张航
+ * @date 2019-07-10 13:43:48
+ * @version V1.0.0
+ */
+export const isObject = (value) => {
+  let type = typeof value
+  return value != null && (type === 'object' || type === 'function')
+}
+
+/**
+ * @functionName isObjectLike
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 检查 value 是否是类对象
+ * @author 张航
+ * @date 2019-07-10 13:46:44
+ * @version V1.0.0
+ */
+export const isObjectLike = (value) => {
+  return value != null && typeof value === 'object'
+}
+
+/**
+ * @functionName getRawType
+ * @param {*} value 被检测的数据
+ * @return {String} 数据类型
+ * @description 获取数据类型
+ * @author 张航
+ * @date 2019-07-10 13:48:55
+ * @version V1.0.0
+ */
+export const getRawType = (value) => {
+  return Object.prototype.toString.call(value).slice(8, -1)
+}
+
+/**
+ * @functionName isPlainObject
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 判断数据是不是Object类型的数据
+ * @author 张航
+ * @date 2019-07-10 14:41:44
+ * @version V1.0.0
+ */
+export const isPlainObject = (obj) => {
+  return Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+/**
+ * @functionName isFunction
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 检查 value 是不是函数
+ * @author 张航
+ * @date 2019-07-10 14:40:42
+ * @version V1.0.0
+ */
+export const isFunction = (value) => {
+  return Object.prototype.toString.call(value) === '[object Function]'
+}
+
+/**
+ * @functionName isLength
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 检查 value 是否为有效的类数组长度
+ * @author 张航
+ * @date 2019-07-10 14:38:53
+ * @version V1.0.0
+ */
+export const isLength = (value) => {
+  return typeof value === 'number' && value > -1 && value % 1 === 0 && value <= Number.MAX_SAFE_INTEGER
+}
+
+/**
+ * @functionName isArrayLike
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 检查 value 是否是类数组
+ * @author 张航
+ * @date 2019-07-10 14:36:32
+ * @version V1.0.0
+ */
+export const isArrayLike = (value) => {
+  return value != null && isLength(value.length) && !isFunction(value)
+}
+
+/**
+ * @functionName isEmpty
+ * @param {*} value 被检测的数据
+ * @return {Boolean} 返回结果
+ * @description 检查 value 是否为空
+ * @author 张航
+ * @date 2019-07-10 13:52:21
+ * @version V1.0.0
+ */
+export const isEmpty = (value) => {
+  if (value == null) {
+    return true
+  }
+  if (isArrayLike(value)) {
+    return !value.length
+  } else if (isPlainObject(value)) {
+    for (let key in value) {
+      if (hasOwnProperty.call(value, key)) {
+        return false
+      }
+    }
+    return true
+  }
+  return false
+}
+
+/**
+ * @functionName camelize
+ * @param {String} str 待转换的字符串
+ * @return {String} 转换后的字符串
+ * @description 横线转驼峰命名
+ * @author 张航
+ * @date 2019-07-10 14:09:21
+ * @version V1.0.0
+ */
+export const camelize = (str) => {
+  const camelizeRE = /-(\w)/g
+  return str.replace(camelizeRE, function (_, c) {
+    return c ? c.toUpperCase() : ''
+  })
+}
+
+/**
+ * @functionName hyphenate
+ * @param {String} str 待转换的字符串
+ * @return {String} 转换后的字符串
+ * @description 驼峰命名转横线命名
+ * @author 张航
+ * @date 2019-07-10 14:11:38
+ * @version V1.0.0
+ */
+
+export const hyphenate = (str) => {
+  const hyphenateRE = /\B([A-Z])/g
+  return str.replace(hyphenateRE, '-$1').toLowerCase()
+}
+
+/**
+ * @functionName capitalize
+ * @param {String} str 待转换的字符串
+ * @return {String} 转换后的字符串
+ * @description 字符串首位大写
+ * @author 张航
+ * @date 2019-07-10 14:13:54
+ * @version V1.0.0
+ */
+export const capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
